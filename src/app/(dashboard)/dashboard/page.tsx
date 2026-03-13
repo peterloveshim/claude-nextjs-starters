@@ -1,7 +1,8 @@
-import { Users, TrendingUp, ShoppingCart, DollarSign, ArrowUpRight, ArrowDownRight } from "lucide-react";
+import { Users, TrendingUp, ShoppingCart, DollarSign } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { PageHeader } from "@/components/common/page-header";
+import { StatCard } from "@/components/common/stat-card";
 import { Button } from "@/components/ui/button";
 
 // 통계 카드 데이터
@@ -40,13 +41,13 @@ const statsCards = [
   },
 ];
 
-// 최근 활동 데이터
+// 최근 활동 데이터 (id 추가로 key={index} 제거)
 const recentActivities = [
-  { user: "김민준", action: "새 계정을 생성했습니다", time: "방금 전", status: "완료" },
-  { user: "이서연", action: "프리미엄 플랜으로 업그레이드했습니다", time: "5분 전", status: "완료" },
-  { user: "박지호", action: "결제가 실패했습니다", time: "10분 전", status: "실패" },
-  { user: "최수아", action: "비밀번호를 변경했습니다", time: "1시간 전", status: "완료" },
-  { user: "정도윤", action: "지원 티켓을 제출했습니다", time: "2시간 전", status: "대기중" },
+  { id: 1, user: "김민준", action: "새 계정을 생성했습니다", time: "방금 전", status: "완료" },
+  { id: 2, user: "이서연", action: "프리미엄 플랜으로 업그레이드했습니다", time: "5분 전", status: "완료" },
+  { id: 3, user: "박지호", action: "결제가 실패했습니다", time: "10분 전", status: "실패" },
+  { id: 4, user: "최수아", action: "비밀번호를 변경했습니다", time: "1시간 전", status: "완료" },
+  { id: 5, user: "정도윤", action: "지원 티켓을 제출했습니다", time: "2시간 전", status: "대기중" },
 ];
 
 const statusVariantMap: Record<string, "default" | "destructive" | "secondary"> = {
@@ -62,35 +63,19 @@ export default function DashboardPage() {
         <Button size="sm">보고서 내보내기</Button>
       </PageHeader>
 
-      {/* 통계 카드 그리드 */}
+      {/* 통계 카드 그리드 (StatCard 공통 컴포넌트 사용) */}
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        {statsCards.map((stat) => {
-          const Icon = stat.icon;
-          const TrendIcon = stat.isPositive ? ArrowUpRight : ArrowDownRight;
-
-          return (
-            <Card key={stat.title}>
-              <CardHeader className="flex flex-row items-center justify-between pb-2">
-                <CardTitle className="text-sm font-medium text-muted-foreground">
-                  {stat.title}
-                </CardTitle>
-                <Icon className="size-4 text-muted-foreground" />
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">{stat.value}</div>
-                <div className="mt-1 flex items-center gap-1 text-xs">
-                  <TrendIcon
-                    className={`size-3 ${stat.isPositive ? "text-green-500" : "text-red-500"}`}
-                  />
-                  <span className={stat.isPositive ? "text-green-500" : "text-red-500"}>
-                    {stat.change}
-                  </span>
-                  <span className="text-muted-foreground">{stat.description}</span>
-                </div>
-              </CardContent>
-            </Card>
-          );
-        })}
+        {statsCards.map((stat) => (
+          <StatCard
+            key={stat.title}
+            title={stat.title}
+            value={stat.value}
+            icon={stat.icon}
+            change={stat.change}
+            isPositive={stat.isPositive}
+            description={stat.description}
+          />
+        ))}
       </div>
 
       {/* 최근 활동 */}
@@ -101,15 +86,16 @@ export default function DashboardPage() {
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
-            {recentActivities.map((activity, index) => (
+            {/* id를 key로 사용하여 안정적인 렌더링 */}
+            {recentActivities.map((activity) => (
               <div
-                key={index}
+                key={activity.id}
                 className="flex items-center justify-between border-b pb-4 last:border-0 last:pb-0"
               >
                 <div className="flex items-center gap-3">
-                  {/* 아바타 */}
+                  {/* 아바타 - charAt(0)으로 noUncheckedIndexedAccess 대응 */}
                   <div className="flex size-9 items-center justify-center rounded-full bg-primary/10 text-sm font-medium text-primary">
-                    {activity.user[0]}
+                    {activity.user.charAt(0)}
                   </div>
                   <div>
                     <p className="text-sm font-medium">{activity.user}</p>
@@ -120,7 +106,8 @@ export default function DashboardPage() {
                   <span className="hidden text-xs text-muted-foreground sm:block">
                     {activity.time}
                   </span>
-                  <Badge variant={statusVariantMap[activity.status]}>
+                  {/* Record 접근 시 undefined 대비 fallback 추가 */}
+                  <Badge variant={statusVariantMap[activity.status] ?? "secondary"}>
                     {activity.status}
                   </Badge>
                 </div>

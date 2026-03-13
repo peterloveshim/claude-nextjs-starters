@@ -1,32 +1,41 @@
-import { Users, UserPlus, UserCheck, UserX } from "lucide-react";
+"use client";
+
+import { useQuery } from "@tanstack/react-query";
+import { UserPlus } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { PageHeader } from "@/components/common/page-header";
+import { StatCard } from "@/components/common/stat-card";
 import { Button } from "@/components/ui/button";
-
-// 사용자 통계 데이터
-const statsCards = [
-  { title: "전체 사용자", value: "12,345", icon: Users },
-  { title: "신규 가입", value: "324", icon: UserPlus },
-  { title: "활성 사용자", value: "9,210", icon: UserCheck },
-  { title: "비활성 사용자", value: "3,135", icon: UserX },
-];
-
-// 사용자 목록 데이터
-const users = [
-  { name: "김민준", email: "minjun@example.com", role: "관리자", status: "활성" },
-  { name: "이서연", email: "seoyeon@example.com", role: "사용자", status: "활성" },
-  { name: "박지호", email: "jiho@example.com", role: "사용자", status: "비활성" },
-  { name: "최수아", email: "sua@example.com", role: "편집자", status: "활성" },
-  { name: "정도윤", email: "doyun@example.com", role: "사용자", status: "활성" },
-];
+import { userStats, users } from "@/mock/users";
 
 const statusVariantMap: Record<string, "default" | "secondary"> = {
   활성: "default",
   비활성: "secondary",
 };
 
+// Mock 데이터를 비동기로 반환하는 fetcher (실제 API로 교체 가능)
+async function fetchUsers() {
+  return users;
+}
+
+async function fetchUserStats() {
+  return userStats;
+}
+
 export default function UsersPage() {
+  // TanStack Query로 사용자 통계 데이터 페칭
+  const { data: stats = [] } = useQuery({
+    queryKey: ["userStats"],
+    queryFn: fetchUserStats,
+  });
+
+  // TanStack Query로 사용자 목록 데이터 페칭
+  const { data: userList = [] } = useQuery({
+    queryKey: ["users"],
+    queryFn: fetchUsers,
+  });
+
   return (
     <div className="space-y-6">
       <PageHeader title="사용자" description="사용자 목록 및 현황을 관리하세요.">
@@ -36,24 +45,16 @@ export default function UsersPage() {
         </Button>
       </PageHeader>
 
-      {/* 통계 카드 */}
+      {/* 통계 카드 (StatCard 공통 컴포넌트 사용) */}
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        {statsCards.map((stat) => {
-          const Icon = stat.icon;
-          return (
-            <Card key={stat.title}>
-              <CardHeader className="flex flex-row items-center justify-between pb-2">
-                <CardTitle className="text-sm font-medium text-muted-foreground">
-                  {stat.title}
-                </CardTitle>
-                <Icon className="size-4 text-muted-foreground" />
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">{stat.value}</div>
-              </CardContent>
-            </Card>
-          );
-        })}
+        {stats.map((stat) => (
+          <StatCard
+            key={stat.id}
+            title={stat.title}
+            value={stat.value}
+            icon={stat.icon}
+          />
+        ))}
       </div>
 
       {/* 사용자 목록 */}
@@ -64,15 +65,16 @@ export default function UsersPage() {
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
-            {users.map((user, index) => (
+            {/* id를 key로 사용하여 안정적인 렌더링 */}
+            {userList.map((user) => (
               <div
-                key={index}
+                key={user.id}
                 className="flex items-center justify-between border-b pb-4 last:border-0 last:pb-0"
               >
                 <div className="flex items-center gap-3">
-                  {/* 아바타 */}
+                  {/* 아바타 - charAt(0)으로 noUncheckedIndexedAccess 대응 */}
                   <div className="flex size-9 items-center justify-center rounded-full bg-primary/10 text-sm font-medium text-primary">
-                    {user.name[0]}
+                    {user.name.charAt(0)}
                   </div>
                   <div>
                     <p className="text-sm font-medium">{user.name}</p>
@@ -81,7 +83,8 @@ export default function UsersPage() {
                 </div>
                 <div className="flex items-center gap-3">
                   <span className="hidden text-xs text-muted-foreground sm:block">{user.role}</span>
-                  <Badge variant={statusVariantMap[user.status]}>{user.status}</Badge>
+                  {/* Record 접근 시 undefined 대비 fallback 추가 */}
+                  <Badge variant={statusVariantMap[user.status] ?? "secondary"}>{user.status}</Badge>
                 </div>
               </div>
             ))}
