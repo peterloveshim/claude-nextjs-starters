@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import {
   useLocalStorage,
   useDebounceValue,
@@ -11,6 +11,7 @@ import {
   useMediaQuery,
   useHover,
 } from "usehooks-ts";
+import { cn } from "@/lib/utils";
 import { PageHeader } from "@/components/common/page-header";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -67,7 +68,8 @@ function LocalStorageDemo() {
 
 // ─── useDebounce 데모 ────────────────────────────────────
 function DebounceDemo() {
-  const [value, setValue] = useLocalStorage<string>("demo-debounce-input", "");
+  // useLocalStorage 대신 useState 사용 (디바운스 데모 목적에 충실)
+  const [value, setValue] = useState<string>("");
   const [debouncedValue] = useDebounceValue(value, 500);
 
   return (
@@ -118,8 +120,8 @@ function ToggleDemo() {
         <CardDescription>불리언 값을 간편하게 토글합니다.</CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
-        <div className={`rounded-lg border p-6 text-center transition-all ${value ? "bg-primary/10 border-primary/30" : "bg-muted/30"}`}>
-          <div className={`mx-auto mb-2 flex size-12 items-center justify-center rounded-full transition-all ${value ? "bg-primary text-primary-foreground" : "bg-muted"}`}>
+        <div className={cn("rounded-lg border p-6 text-center transition-all", value ? "bg-primary/10 border-primary/30" : "bg-muted/30")}>
+          <div className={cn("mx-auto mb-2 flex size-12 items-center justify-center rounded-full transition-all", value ? "bg-primary text-primary-foreground" : "bg-muted")}>
             <span className="text-xl">{value ? "✓" : "○"}</span>
           </div>
           <p className="font-medium">{value ? "활성화됨" : "비활성화됨"}</p>
@@ -151,7 +153,7 @@ function CounterDemo() {
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="flex items-center justify-center">
-          <span className={`text-5xl font-bold tabular-nums transition-colors ${count > 0 ? "text-primary" : count < 0 ? "text-destructive" : ""}`}>
+          <span className={cn("text-5xl font-bold tabular-nums transition-colors", count > 0 ? "text-primary" : count < 0 ? "text-destructive" : "")}>
             {count}
           </span>
         </div>
@@ -288,11 +290,9 @@ function MediaQueryDemo() {
           {breakpoints.map((bp) => (
             <div
               key={bp.label}
-              className={`flex items-center justify-between rounded-md px-3 py-2 transition-colors ${
-                bp.active ? "bg-primary/10" : "bg-muted/30"
-              }`}
+              className={cn("flex items-center justify-between rounded-md px-3 py-2 transition-colors", bp.active ? "bg-primary/10" : "bg-muted/30")}
             >
-              <span className={`text-sm ${bp.active ? "font-medium text-primary" : "text-muted-foreground"}`}>
+              <span className={cn("text-sm", bp.active ? "font-medium text-primary" : "text-muted-foreground")}>
                 {bp.label}
               </span>
               <Badge variant={bp.active ? "default" : "secondary"}>
@@ -310,10 +310,9 @@ function MediaQueryDemo() {
 function HoverDemo() {
   const ref1 = useRef<HTMLDivElement>(null);
   const ref2 = useRef<HTMLButtonElement>(null);
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const isHovering1 = useHover(ref1 as any);
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const isHovering2 = useHover(ref2 as any);
+  // HTMLDivElement/HTMLButtonElement 모두 HTMLElement를 상속하므로 안전한 캐스팅
+  const isHovering1 = useHover(ref1 as React.RefObject<HTMLElement>);
+  const isHovering2 = useHover(ref2 as React.RefObject<HTMLElement>);
 
   return (
     <Card>
@@ -327,14 +326,13 @@ function HoverDemo() {
       <CardContent className="space-y-3">
         <div
           ref={ref1}
-          className={`flex cursor-default items-center justify-between rounded-lg border-2 p-4 transition-all ${
-            isHovering1
-              ? "border-primary bg-primary/5"
-              : "border-transparent bg-muted/30"
-          }`}
+          className={cn(
+            "flex cursor-default items-center justify-between rounded-lg border-2 p-4 transition-all",
+            isHovering1 ? "border-primary bg-primary/5" : "border-transparent bg-muted/30"
+          )}
         >
           <div className="flex items-center gap-2">
-            <MousePointer2 className={`size-5 transition-colors ${isHovering1 ? "text-primary" : "text-muted-foreground"}`} />
+            <MousePointer2 className={cn("size-5 transition-colors", isHovering1 ? "text-primary" : "text-muted-foreground")} />
             <span className="text-sm font-medium">카드 영역</span>
           </div>
           <Badge variant={isHovering1 ? "default" : "secondary"}>

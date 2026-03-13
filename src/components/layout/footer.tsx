@@ -4,6 +4,7 @@ import { siteConfig, footerLinks } from "@/lib/constants";
 
 // 푸터 컴포넌트
 export function Footer() {
+  // 빌드 타임에 연도가 고정됩니다 (서버 컴포넌트)
   const currentYear = new Date().getFullYear();
 
   return (

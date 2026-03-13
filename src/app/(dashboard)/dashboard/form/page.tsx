@@ -59,12 +59,12 @@ const profileSchema = z.object({
 });
 type ProfileFormValues = z.infer<typeof profileSchema>;
 
-// ─── 결과 표시 컴포넌트 ────────────────────────────────────
-function SubmitResult({
+// ─── 결과 표시 컴포넌트 (제네릭으로 as 캐스팅 불필요) ────────
+function SubmitResult<T extends object>({
   data,
   onReset,
 }: {
-  data: Record<string, unknown>;
+  data: T;
   onReset: () => void;
 }) {
   return (
@@ -106,7 +106,7 @@ function LoginForm() {
   if (submitted) {
     return (
       <SubmitResult
-        data={submitted as Record<string, unknown>}
+        data={submitted}
         onReset={() => {
           setSubmitted(null);
           form.reset();
@@ -169,7 +169,7 @@ function SignupForm() {
   if (submitted) {
     return (
       <SubmitResult
-        data={submitted as Record<string, unknown>}
+        data={submitted}
         onReset={() => {
           setSubmitted(null);
           form.reset();
@@ -280,7 +280,7 @@ function ProfileForm() {
   if (submitted) {
     return (
       <SubmitResult
-        data={submitted as Record<string, unknown>}
+        data={submitted}
         onReset={() => {
           setSubmitted(null);
           form.reset();

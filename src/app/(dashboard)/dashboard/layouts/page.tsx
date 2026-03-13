@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { PageHeader } from "@/components/common/page-header";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -8,6 +9,7 @@ import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { BookOpen, Star, MessageSquare, Settings, Bell, User, BarChart2, FileText, ChevronRight } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 // ─── 더미 데이터 ──────────────────────────────────────────
 const blogPosts = [
@@ -107,6 +109,10 @@ function CenteredLayout() {
 
 // ─── 레이아웃 2: Split Panel ───────────────────────────────
 function SplitPanelLayout() {
+  // 활성 메뉴 상태 관리 (클릭 시 업데이트)
+  const [activeMenu, setActiveMenu] = useState<string>("프로필");
+  const activeItem = settingsMenu.find((item) => item.label === activeMenu);
+
   return (
     <div className="flex gap-0 overflow-hidden rounded-lg border">
       {/* 좌측 패널 */}
@@ -116,16 +122,18 @@ function SplitPanelLayout() {
           <p className="text-xs text-muted-foreground">계정 환경설정 관리</p>
         </div>
         <nav className="space-y-1">
-          {settingsMenu.map((item, idx) => {
+          {settingsMenu.map((item) => {
             const Icon = item.icon;
             return (
               <button
                 key={item.label}
-                className={`flex w-full items-center gap-3 rounded-md px-3 py-2 text-sm transition-colors ${
-                  idx === 0
+                onClick={() => setActiveMenu(item.label)}
+                className={cn(
+                  "flex w-full items-center gap-3 rounded-md px-3 py-2 text-sm transition-colors",
+                  item.label === activeMenu
                     ? "bg-primary text-primary-foreground"
                     : "text-muted-foreground hover:bg-muted hover:text-foreground"
-                }`}
+                )}
               >
                 <Icon className="size-4 shrink-0" />
                 {item.label}
@@ -139,8 +147,8 @@ function SplitPanelLayout() {
       <main className="flex-1 p-6">
         <div className="space-y-6">
           <div>
-            <h3 className="text-lg font-semibold">프로필 설정</h3>
-            <p className="text-sm text-muted-foreground">개인 정보를 관리합니다.</p>
+            <h3 className="text-lg font-semibold">{activeMenu} 설정</h3>
+            <p className="text-sm text-muted-foreground">{activeItem?.description}</p>
           </div>
           <Separator />
 

@@ -1,4 +1,4 @@
-import { Zap, Shield, Palette, Layers, Code2, Smartphone } from "lucide-react";
+import { Zap, Shield, Palette, Layers, Code2, Smartphone, Server, Cloud } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
 // 기술 스택 타입 정의
@@ -20,6 +20,7 @@ export type TeamMember = {
   name: string;
   role: string;
   description: string;
+  icon: LucideIcon; // 팀별 개별 아이콘
 };
 
 // 기술 스택 목록
@@ -68,21 +69,58 @@ export const features: Feature[] = [
   },
 ];
 
-// 팀 멤버 목록
+// 팀 멤버 목록 (팀별 개별 아이콘 추가)
 export const team: TeamMember[] = [
   {
     name: "프론트엔드 팀",
     role: "UI/UX 개발",
     description: "React와 Next.js를 활용한 모던 웹 인터페이스 개발",
+    icon: Code2,
   },
   {
     name: "백엔드 팀",
     role: "API 개발",
     description: "안정적이고 확장 가능한 서버 사이드 아키텍처 구축",
+    icon: Server,
   },
   {
     name: "DevOps 팀",
     role: "인프라 & 배포",
     description: "CI/CD 파이프라인 구축 및 클라우드 인프라 관리",
+    icon: Cloud,
+  },
+];
+
+// 홈 페이지용 기능 소개 목록 (page.tsx에서 import하여 사용)
+export const homeFeatures: Feature[] = [
+  {
+    icon: Zap,
+    title: "Next.js 16 App Router",
+    description: "최신 App Router와 서버 컴포넌트로 뛰어난 성능을 제공합니다.",
+  },
+  {
+    icon: Shield,
+    title: "TypeScript",
+    description: "완전한 타입 안전성으로 버그를 사전에 방지합니다.",
+  },
+  {
+    icon: Palette,
+    title: "shadcn/ui + Tailwind CSS",
+    description: "아름답고 접근성 높은 UI 컴포넌트와 유틸리티 퍼스트 CSS.",
+  },
+  {
+    icon: Layers,
+    title: "확장 가능한 구조",
+    description: "대규모 애플리케이션으로 쉽게 확장할 수 있는 폴더 구조.",
+  },
+  {
+    icon: Code2,
+    title: "다크 모드",
+    description: "next-themes를 활용한 시스템 설정 기반 다크/라이트 모드 지원.",
+  },
+  {
+    icon: Smartphone,
+    title: "반응형 디자인",
+    description: "모바일부터 데스크탑까지 모든 화면 크기에 최적화된 레이아웃.",
   },
 ];

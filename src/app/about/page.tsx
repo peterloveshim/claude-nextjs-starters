@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Code2, Users, Target, Rocket } from "lucide-react";
 import { techStack, features, team } from "@/mock/about";
 
+
 export default function AboutPage() {
   return (
     <div className="flex min-h-screen flex-col">
@@ -119,11 +120,14 @@ export default function AboutPage() {
               </p>
             </div>
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
-              {team.map((member) => (
+              {team.map((member) => {
+                // 팀 멤버별 개별 아이콘 렌더링
+                const MemberIcon = member.icon;
+                return (
                 <Card key={member.name} className="text-center transition-shadow hover:shadow-md">
                   <CardHeader>
                     <div className="mx-auto mb-3 flex size-16 items-center justify-center rounded-full bg-primary/10">
-                      <Users className="size-7 text-primary" />
+                      <MemberIcon className="size-7 text-primary" />
                     </div>
                     <CardTitle className="text-lg">{member.name}</CardTitle>
                     <Badge variant="secondary" className="mx-auto w-fit">
@@ -136,7 +140,8 @@ export default function AboutPage() {
                     </CardDescription>
                   </CardContent>
                 </Card>
-              ))}
+                );
+              })}
             </div>
           </div>
         </section>

@@ -12,7 +12,9 @@ export function ThemeToggle() {
   const [mounted, setMounted] = useState(false);
 
   // 컴포넌트가 클라이언트에 마운트된 후에만 렌더링 허용
+  // (서버/클라이언트 HTML 불일치 방지를 위한 의도적인 패턴)
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setMounted(true);
   }, []);
 

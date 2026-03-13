@@ -1,51 +1,11 @@
 import Link from "next/link";
-import {
-  ArrowRight,
-  Zap,
-  Shield,
-  Layers,
-  Palette,
-  Code2,
-  Smartphone,
-} from "lucide-react";
+import { ArrowRight, Code2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
-
-const features = [
-  {
-    icon: Zap,
-    title: "Next.js 16 App Router",
-    description: "최신 App Router와 서버 컴포넌트로 뛰어난 성능을 제공합니다.",
-  },
-  {
-    icon: Shield,
-    title: "TypeScript",
-    description: "완전한 타입 안전성으로 버그를 사전에 방지합니다.",
-  },
-  {
-    icon: Palette,
-    title: "shadcn/ui + Tailwind CSS",
-    description: "아름답고 접근성 높은 UI 컴포넌트와 유틸리티 퍼스트 CSS.",
-  },
-  {
-    icon: Layers,
-    title: "확장 가능한 구조",
-    description: "대규모 애플리케이션으로 쉽게 확장할 수 있는 폴더 구조.",
-  },
-  {
-    icon: Code2,
-    title: "다크 모드",
-    description: "next-themes를 활용한 시스템 설정 기반 다크/라이트 모드 지원.",
-  },
-  {
-    icon: Smartphone,
-    title: "반응형 디자인",
-    description: "모바일부터 데스크탑까지 모든 화면 크기에 최적화된 레이아웃.",
-  },
-];
+import { homeFeatures } from "@/mock/about";
 
 export default function HomePage() {
   return (
@@ -94,7 +54,7 @@ export default function HomePage() {
               </p>
             </div>
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {features.map((feature) => {
+              {homeFeatures.map((feature) => {
                 const Icon = feature.icon;
                 return (
                   <Card key={feature.title} className="transition-shadow hover:shadow-md">

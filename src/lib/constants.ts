@@ -1,4 +1,4 @@
-import { NavLink, SiteConfig } from "@/types";
+import { NavLink, SiteConfig, FooterLinks } from "@/types";
 import { LayoutDashboard, Home, Settings, Users, BarChart3, FileText, Blocks, FormInput, LayoutTemplate, Puzzle } from "lucide-react";
 
 // 사이트 기본 설정
@@ -34,8 +34,8 @@ export const exampleLinks: NavLink[] = [
   { label: "훅 예제", href: "/dashboard/hooks", icon: Puzzle },
 ];
 
-// 푸터 링크
-export const footerLinks = {
+// 푸터 링크 (FooterLinks 타입 명시)
+export const footerLinks: FooterLinks = {
   product: [
     { label: "기능", href: "#features" },
     { label: "가격", href: "#pricing" },
