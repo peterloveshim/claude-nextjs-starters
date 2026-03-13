@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 import { siteConfig, sidebarLinks, exampleLinks } from "@/lib/constants";
 import { NavLink } from "@/types";
 import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 
 // 섹션별 네비게이션 그룹 컴포넌트
 interface SidebarNavGroupProps {
@@ -95,6 +95,10 @@ export function MobileSidebarTrigger({ className }: { className?: string }) {
       </SheetTrigger>
       {/* 좌측에서 슬라이드인 하는 모바일 네비게이션 */}
       <SheetContent side="left" className="w-60 p-0">
+        {/* 스크린 리더 접근성을 위한 제목 (시각적으로는 숨김) */}
+        <SheetHeader className="sr-only">
+          <SheetTitle>내비게이션 메뉴</SheetTitle>
+        </SheetHeader>
         <SidebarContent />
       </SheetContent>
     </Sheet>
