@@ -2,10 +2,12 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Zap } from "lucide-react";
+import { Zap, Menu } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { siteConfig, sidebarLinks, exampleLinks } from "@/lib/constants";
 import { NavLink } from "@/types";
+import { Button } from "@/components/ui/button";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
 // 섹션별 네비게이션 그룹 컴포넌트
 interface SidebarNavGroupProps {
@@ -52,23 +54,49 @@ function SidebarNavGroup({ label, links, pathname }: SidebarNavGroupProps) {
   );
 }
 
-// 대시보드 사이드바 컴포넌트
-export function Sidebar() {
+// 사이드바 내용 (데스크탑/모바일 공통)
+function SidebarContent() {
   const pathname = usePathname();
 
   return (
-    <aside className="hidden w-60 shrink-0 border-r bg-background md:block">
+    <>
       <div className="flex h-14 items-center border-b px-4">
         <Link href="/" className="flex items-center gap-2 font-semibold">
           <Zap className="size-5 text-primary" />
           <span>{siteConfig.name}</span>
         </Link>
       </div>
-
       <nav className="flex flex-col gap-4 p-3">
         <SidebarNavGroup links={sidebarLinks} pathname={pathname} />
         <SidebarNavGroup label="예제" links={exampleLinks} pathname={pathname} />
       </nav>
+    </>
+  );
+}
+
+// 데스크탑용 고정 사이드바 (md 이상에서만 표시)
+export function Sidebar() {
+  return (
+    <aside className="hidden w-60 shrink-0 border-r bg-background md:block">
+      <SidebarContent />
     </aside>
+  );
+}
+
+// 모바일용 햄버거 버튼 + Sheet 슬라이드 메뉴
+export function MobileSidebarTrigger({ className }: { className?: string }) {
+  return (
+    <Sheet>
+      <SheetTrigger asChild>
+        <Button variant="ghost" size="icon" className={className}>
+          <Menu className="size-5" />
+          <span className="sr-only">메뉴 열기</span>
+        </Button>
+      </SheetTrigger>
+      {/* 좌측에서 슬라이드인 하는 모바일 네비게이션 */}
+      <SheetContent side="left" className="w-60 p-0">
+        <SidebarContent />
+      </SheetContent>
+    </Sheet>
   );
 }
