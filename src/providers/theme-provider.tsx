@@ -1,9 +1,9 @@
-"use client";
+'use client'
 
-import { ThemeProvider as NextThemesProvider } from "next-themes";
+import { ThemeProvider as NextThemesProvider } from 'next-themes'
 
 interface ThemeProviderProps {
-  children: React.ReactNode;
+  children: React.ReactNode
 }
 
 // 다크/라이트 모드 전환을 위한 ThemeProvider
@@ -17,5 +17,5 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
     >
       {children}
     </NextThemesProvider>
-  );
+  )
 }

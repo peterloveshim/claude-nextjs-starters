@@ -1,33 +1,39 @@
-"use client";
+'use client'
 
-import { useQuery } from "@tanstack/react-query";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { PageHeader } from "@/components/common/page-header";
-import { StatCard } from "@/components/common/stat-card";
-import { Button } from "@/components/ui/button";
-import { analyticsStats, topPages } from "@/mock/analytics";
+import { useQuery } from '@tanstack/react-query'
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+} from '@/components/ui/card'
+import { PageHeader } from '@/components/common/page-header'
+import { StatCard } from '@/components/common/stat-card'
+import { Button } from '@/components/ui/button'
+import { analyticsStats, topPages } from '@/mock/analytics'
 
 // Mock 데이터를 비동기로 반환하는 fetcher (실제 API로 교체 가능)
 async function fetchAnalyticsStats() {
-  return analyticsStats;
+  return analyticsStats
 }
 
 async function fetchTopPages() {
-  return topPages;
+  return topPages
 }
 
 export default function AnalyticsPage() {
   // TanStack Query로 분석 통계 데이터 페칭
   const { data: stats = [] } = useQuery({
-    queryKey: ["analyticsStats"],
+    queryKey: ['analyticsStats'],
     queryFn: fetchAnalyticsStats,
-  });
+  })
 
   // TanStack Query로 인기 페이지 데이터 페칭
   const { data: pages = [] } = useQuery({
-    queryKey: ["topPages"],
+    queryKey: ['topPages'],
     queryFn: fetchTopPages,
-  });
+  })
 
   return (
     <div className="space-y-6">
@@ -66,13 +72,13 @@ export default function AnalyticsPage() {
               >
                 <div className="flex items-center gap-3">
                   {/* 순위 배지 */}
-                  <div className="flex size-9 items-center justify-center rounded-full bg-primary/10 text-sm font-bold text-primary">
+                  <div className="bg-primary/10 text-primary flex size-9 items-center justify-center rounded-full text-sm font-bold">
                     {item.id}
                   </div>
                   <p className="text-sm font-medium">{item.page}</p>
                 </div>
                 <div className="flex items-center gap-4">
-                  <span className="hidden text-xs text-muted-foreground sm:block">
+                  <span className="text-muted-foreground hidden text-xs sm:block">
                     {item.views} 뷰
                   </span>
                   <span className="text-sm font-semibold">{item.rate}</span>
@@ -83,5 +89,5 @@ export default function AnalyticsPage() {
         </CardContent>
       </Card>
     </div>
-  );
+  )
 }

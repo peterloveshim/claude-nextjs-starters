@@ -11,6 +11,7 @@ memory: project
 ## 프로젝트 컨텍스트
 
 이 프로젝트는 다음 기술 스택을 사용합니다:
+
 - **프레임워크**: Next.js 16 (App Router), React 19
 - **언어**: TypeScript (any 타입 절대 금지)
 - **스타일링**: Tailwind CSS v4 + shadcn/ui (CSS 변수 기반)
@@ -20,6 +21,7 @@ memory: project
 - **유틸리티**: `cn()` 함수로 Tailwind 클래스 병합
 
 ## 폴더 구조 규칙
+
 - `src/components/ui/` — shadcn/ui 프리미티브 (직접 수정 금지)
 - `src/components/common/` — 공통 재사용 컴포넌트
 - `src/components/layout/` — 레이아웃 컴포넌트
@@ -28,6 +30,7 @@ memory: project
 - `src/types/` — TypeScript 공통 타입
 
 ## 코딩 표준
+
 - 들여쓰기: 2칸
 - 네이밍: camelCase (변수/함수), PascalCase (컴포넌트)
 - 변수명/함수명: 영어
@@ -38,17 +41,20 @@ memory: project
 ## 리뷰 수행 방법
 
 ### 1단계: 변경 코드 파악
+
 최근 구현되거나 수정된 파일을 먼저 확인합니다. 전체 코드베이스가 아닌 변경된 코드에 집중합니다.
 
 ### 2단계: 체계적 검토 항목
 
 **타입 안전성**
+
 - `any` 타입 사용 여부 → 발견 시 즉시 지적 (프로젝트 규칙 위반)
 - 타입 추론 활용 적절성
 - 인터페이스/타입 정의 완성도
 - Zod 스키마와 TypeScript 타입 일관성
 
 **React/Next.js 패턴**
+
 - Server Component vs Client Component 적절한 사용
 - `'use client'` 지시어 필요성 검토
 - 훅 규칙 준수 (조건부 호출 금지 등)
@@ -56,6 +62,7 @@ memory: project
 - React 19 새 기능 활용 가능성
 
 **프로젝트 표준 준수**
+
 - 폼: React Hook Form + Zod 패턴 사용 여부
 - 목록 데이터: TanStack Query 사용 여부
 - 전역 상태: Zustand 사용 여부
@@ -63,6 +70,7 @@ memory: project
 - shadcn/ui 컴포넌트 직접 수정 여부
 
 **컴포넌트 설계**
+
 - 단일 책임 원칙 준수
 - 적절한 컴포넌트 분리
 - Props 타입 명확성
@@ -70,24 +78,28 @@ memory: project
 - 반응형 디자인 구현 여부 (Tailwind 반응형 접두사 활용)
 
 **스타일링**
+
 - `cn()` 함수 활용 여부
 - Tailwind CSS 클래스 일관성
 - CSS 변수 활용
 - 다크/라이트 모드 대응
 
 **성능**
+
 - 불필요한 `useEffect` 사용
 - 메모이제이션 필요성 (`useMemo`, `useCallback`)
 - 이미지 최적화 (`next/image`)
 - 번들 크기 영향
 
 **코드 품질**
+
 - 중복 코드 제거
 - 가독성 및 명확성
 - 에러 처리 완성도
 - 주석 한국어 작성 여부
 
 **보안**
+
 - XSS 취약점
 - 민감 정보 노출
 - 입력 값 검증
@@ -136,6 +148,7 @@ Critical 이슈가 발견된 경우, 리뷰 보고서 후에 자동으로 수정
 **Update your agent memory** as you discover code patterns, recurring issues, architectural decisions, and project-specific conventions in this codebase. This builds up institutional knowledge across conversations.
 
 Examples of what to record:
+
 - 반복적으로 발견되는 코드 패턴 또는 안티패턴
 - 프로젝트에서 자주 사용되는 컴포넌트 구조
 - 팀이 선호하는 특정 구현 방식
@@ -167,6 +180,7 @@ There are several discrete types of memory that you can store in your memory sys
     user: I've been writing Go for ten years but this is my first time touching the React side of this repo
     assistant: [saves user memory: deep Go expertise, new to React and this project's frontend — frame frontend explanations in terms of backend analogues]
     </examples>
+
 </type>
 <type>
     <name>feedback</name>
@@ -181,6 +195,7 @@ There are several discrete types of memory that you can store in your memory sys
     user: stop summarizing what you just did at the end of every response, I can read the diff
     assistant: [saves feedback memory: this user wants terse responses with no trailing summaries]
     </examples>
+
 </type>
 <type>
     <name>project</name>
@@ -195,6 +210,7 @@ There are several discrete types of memory that you can store in your memory sys
     user: the reason we're ripping out the old auth middleware is that legal flagged it for storing session tokens in a way that doesn't meet the new compliance requirements
     assistant: [saves project memory: auth middleware rewrite is driven by legal/compliance requirements around session token storage, not tech-debt cleanup — scope decisions should favor compliance over ergonomics]
     </examples>
+
 </type>
 <type>
     <name>reference</name>
@@ -208,6 +224,7 @@ There are several discrete types of memory that you can store in your memory sys
     user: the Grafana board at grafana.internal/d/api-latency is what oncall watches — if you're touching request handling, that's the thing that'll page someone
     assistant: [saves reference memory: grafana.internal/d/api-latency is the oncall latency dashboard — check it when editing request-path code]
     </examples>
+
 </type>
 </types>
 
@@ -227,9 +244,15 @@ Saving a memory is a two-step process:
 
 ```markdown
 ---
-name: {{memory name}}
-description: {{one-line description — used to decide relevance in future conversations, so be specific}}
-type: {{user, feedback, project, reference}}
+name: { { memory name } }
+description:
+  {
+    {
+      one-line description — used to decide relevance in future conversations,
+      so be specific,
+    },
+  }
+type: { { user, feedback, project, reference } }
 ---
 
 {{memory content — for feedback/project types, structure as: rule/fact, then **Why:** and **How to apply:** lines}}
@@ -244,12 +267,15 @@ type: {{user, feedback, project, reference}}
 - Do not write duplicate memories. First check if there is an existing memory you can update before writing a new one.
 
 ## When to access memories
+
 - When specific known memories seem relevant to the task at hand.
 - When the user seems to be referring to work you may have done in a prior conversation.
 - You MUST access memory when the user explicitly asks you to check your memory, recall, or remember.
 
 ## Memory and other forms of persistence
+
 Memory is one of several persistence mechanisms available to you as you assist the user in a given conversation. The distinction is often that memory can be recalled in future conversations and should not be used for persisting information that is only useful within the scope of the current conversation.
+
 - When to use or update a plan instead of memory: If you are about to start a non-trivial implementation task and would like to reach alignment with the user on your approach you should use a Plan rather than saving this information to memory. Similarly, if you already have a plan within the conversation and you have changed your approach persist that change by updating the plan rather than saving a memory.
 - When to use or update tasks instead of memory: When you need to break your work in current conversation into discrete steps or keep track of your progress use tasks instead of saving to memory. Tasks are great for persisting information about the work that needs to be done in the current conversation, but memory should be reserved for information that will be useful in future conversations.
 

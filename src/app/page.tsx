@@ -1,11 +1,17 @@
-import Link from "next/link";
-import { ArrowRight, Code2 } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Header } from "@/components/layout/header";
-import { Footer } from "@/components/layout/footer";
-import { homeFeatures } from "@/mock/about";
+import Link from 'next/link'
+import { ArrowRight, Code2 } from 'lucide-react'
+import { Button } from '@/components/ui/button'
+import { Badge } from '@/components/ui/badge'
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+} from '@/components/ui/card'
+import { Header } from '@/components/layout/header'
+import { Footer } from '@/components/layout/footer'
+import { homeFeatures } from '@/mock/about'
 
 export default function HomePage() {
   return (
@@ -19,12 +25,12 @@ export default function HomePage() {
             🚀 Next.js 16 스타터킷
           </Badge>
           <h1 className="mx-auto max-w-3xl text-4xl font-bold tracking-tight md:text-6xl">
-            모던 웹 개발을{" "}
-            <span className="text-primary">빠르게</span> 시작하세요
+            모던 웹 개발을 <span className="text-primary">빠르게</span>{' '}
+            시작하세요
           </h1>
-          <p className="mx-auto mt-6 max-w-2xl text-lg text-muted-foreground">
-            Next.js 16, TypeScript, shadcn/ui, Tailwind CSS로 구성된 프로덕션 레디
-            스타터킷입니다. 설정 없이 바로 개발을 시작할 수 있습니다.
+          <p className="text-muted-foreground mx-auto mt-6 max-w-2xl text-lg">
+            Next.js 16, TypeScript, shadcn/ui, Tailwind CSS로 구성된 프로덕션
+            레디 스타터킷입니다. 설정 없이 바로 개발을 시작할 수 있습니다.
           </p>
           <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
             <Button size="lg" asChild>
@@ -43,24 +49,27 @@ export default function HomePage() {
         </section>
 
         {/* 기능 섹션 */}
-        <section id="features" className="border-t bg-muted/40 py-24">
+        <section id="features" className="bg-muted/40 border-t py-24">
           <div className="container mx-auto max-w-screen-xl px-4">
             <div className="mb-12 text-center">
               <h2 className="text-3xl font-bold tracking-tight">
                 모든 것이 준비되어 있습니다
               </h2>
-              <p className="mt-3 text-muted-foreground">
+              <p className="text-muted-foreground mt-3">
                 프로덕션 환경에 필요한 모든 기능이 내장되어 있습니다.
               </p>
             </div>
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {homeFeatures.map((feature) => {
-                const Icon = feature.icon;
+                const Icon = feature.icon
                 return (
-                  <Card key={feature.title} className="transition-shadow hover:shadow-md">
+                  <Card
+                    key={feature.title}
+                    className="transition-shadow hover:shadow-md"
+                  >
                     <CardHeader>
-                      <div className="mb-2 flex size-10 items-center justify-center rounded-lg bg-primary/10">
-                        <Icon className="size-5 text-primary" />
+                      <div className="bg-primary/10 mb-2 flex size-10 items-center justify-center rounded-lg">
+                        <Icon className="text-primary size-5" />
                       </div>
                       <CardTitle className="text-lg">{feature.title}</CardTitle>
                     </CardHeader>
@@ -70,7 +79,7 @@ export default function HomePage() {
                       </CardDescription>
                     </CardContent>
                   </Card>
-                );
+                )
               })}
             </div>
           </div>
@@ -82,7 +91,7 @@ export default function HomePage() {
             <h2 className="text-3xl font-bold tracking-tight">
               지금 바로 시작하세요
             </h2>
-            <p className="mt-3 text-muted-foreground">
+            <p className="text-muted-foreground mt-3">
               복잡한 설정 없이 바로 개발에 집중하세요.
             </p>
             <Button size="lg" className="mt-8" asChild>
@@ -97,5 +106,5 @@ export default function HomePage() {
 
       <Footer />
     </div>
-  );
+  )
 }

@@ -1,23 +1,23 @@
-import Link from "next/link";
-import { Zap } from "lucide-react";
-import { siteConfig, footerLinks } from "@/lib/constants";
+import Link from 'next/link'
+import { Zap } from 'lucide-react'
+import { siteConfig, footerLinks } from '@/lib/constants'
 
 // 푸터 컴포넌트
 export function Footer() {
   // 빌드 타임에 연도가 고정됩니다 (서버 컴포넌트)
-  const currentYear = new Date().getFullYear();
+  const currentYear = new Date().getFullYear()
 
   return (
-    <footer className="border-t bg-background">
+    <footer className="bg-background border-t">
       <div className="container mx-auto max-w-screen-xl px-4 py-12">
         <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
           {/* 브랜드 섹션 */}
           <div className="col-span-2 md:col-span-1">
             <Link href="/" className="flex items-center gap-2 font-semibold">
-              <Zap className="size-5 text-primary" />
+              <Zap className="text-primary size-5" />
               <span>{siteConfig.name}</span>
             </Link>
-            <p className="mt-3 text-sm text-muted-foreground">
+            <p className="text-muted-foreground mt-3 text-sm">
               {siteConfig.description}
             </p>
           </div>
@@ -30,7 +30,7 @@ export function Footer() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+                    className="text-muted-foreground hover:text-foreground text-sm transition-colors"
                   >
                     {link.label}
                   </Link>
@@ -47,7 +47,7 @@ export function Footer() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+                    className="text-muted-foreground hover:text-foreground text-sm transition-colors"
                   >
                     {link.label}
                   </Link>
@@ -64,7 +64,7 @@ export function Footer() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+                    className="text-muted-foreground hover:text-foreground text-sm transition-colors"
                   >
                     {link.label}
                   </Link>
@@ -76,11 +76,11 @@ export function Footer() {
 
         {/* 하단 저작권 */}
         <div className="mt-8 border-t pt-6">
-          <p className="text-center text-sm text-muted-foreground">
+          <p className="text-muted-foreground text-center text-sm">
             © {currentYear} {siteConfig.name}. All rights reserved.
           </p>
         </div>
       </div>
     </footer>
-  );
+  )
 }

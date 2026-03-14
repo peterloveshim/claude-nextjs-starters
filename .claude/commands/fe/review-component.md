@@ -1,11 +1,6 @@
 ---
-description: "컴포넌트 파일을 프로젝트 규칙 기준으로 코드 품질을 검토하고 개선점을 제안합니다"
-allowed-tools:
-  [
-    "Read",
-    "Glob",
-    "Grep",
-  ]
+description: '컴포넌트 파일을 프로젝트 규칙 기준으로 코드 품질을 검토하고 개선점을 제안합니다'
+allowed-tools: ['Read', 'Glob', 'Grep']
 ---
 
 # Claude 명령어: Review Component
@@ -19,6 +14,7 @@ allowed-tools:
 ```
 
 **예시:**
+
 ```
 /review-component src/components/layout/sidebar.tsx
 /review-component src/components/common/page-header.tsx
@@ -34,35 +30,42 @@ allowed-tools:
 ## 검토 항목
 
 ### 1. 타입 안전성 (TypeScript)
+
 - `any` 타입 사용 여부 → 구체적인 타입 또는 `unknown`으로 교체 제안
 - props 타입 정의 누락 여부 (`interface Props` 또는 `type Props`)
 - 함수 반환 타입 명시 여부
 
 ### 2. 반응형 디자인 (Tailwind CSS)
+
 - 반응형 접두사(`sm:`, `md:`, `lg:`, `xl:`) 누락 여부
 - 고정 크기(`w-[300px]` 등) 사용 시 반응형 대안 제안
 - 모바일 퍼스트 원칙 준수 여부
 
 ### 3. 컴포넌트 설계
+
 - 단일 책임 원칙: 하나의 컴포넌트가 너무 많은 역할을 하지 않는지
 - 분리 가능한 하위 컴포넌트 존재 여부
 - `src/components/common/`으로 이동 가능한 재사용 로직 여부
 
 ### 4. shadcn/ui 활용
+
 - shadcn/ui 컴포넌트로 대체 가능한 직접 구현 UI 요부
 - `cn()` 유틸 함수 활용 여부 (조건부 클래스 병합)
 
 ### 5. 상태 관리 패턴
+
 - 전역 상태가 필요한 로컬 상태를 `useState`로 관리하는 경우 → Zustand 이전 제안
 - 목록 데이터를 직접 fetch하는 경우 → TanStack Query 사용 제안
 - 불필요한 `useEffect` 사용 여부
 
 ### 6. 성능
+
 - 불필요한 리렌더링 유발 요소 (인라인 객체/함수)
 - `useMemo`, `useCallback` 적용 가능 위치
 - 이미지 사용 시 `next/image` 컴포넌트 사용 여부
 
 ### 7. 코드 가독성
+
 - 함수/변수명이 역할을 명확히 설명하는지
 - 로직이 복잡한 경우 커스텀 훅으로 분리 가능 여부
 - 불필요한 주석 또는 주석 부재 (복잡한 로직에는 한국어 주석 권장)

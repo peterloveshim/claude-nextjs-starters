@@ -13,30 +13,36 @@ type: project
 ## 반복적으로 발견된 코드 패턴
 
 ### 통계 카드 패턴 (반복 중복)
+
 `dashboard/page.tsx`, `users/page.tsx`, `analytics/page.tsx` 모두 동일한 통계 카드 구조를 직접 구현함.
 공통 `StatCard` 컴포넌트로 추출 필요.
 
 ### 목록 아이템 패턴 (반복 중복)
+
 `dashboard/page.tsx`의 최근 활동 목록, `users/page.tsx`의 사용자 목록, `analytics/page.tsx`의 인기 페이지 목록이
 모두 유사한 구조 (아이콘/아바타 + 텍스트 + 우측 배지/값). 공통화 가능.
 
 ### key={index} 안티패턴
+
 `dashboard/page.tsx:106`, `users/page.tsx:69`, `analytics/page.tsx:60`에서 배열 index를 key로 사용.
 고유 식별자(id, href 등)를 key로 사용해야 함.
 
 ## 타입 관련 이슈
 
 ### any 타입 사용 (프로젝트 규칙 위반)
+
 `hooks/page.tsx:314-316`: `useHover` ref 타입 불일치로 `as any` 캐스팅 사용.
 `eslint-disable @typescript-eslint/no-explicit-any` 주석으로 회피 중.
 
 ### 불필요한 타입 캐스팅
+
 `form/page.tsx:109, 172, 282`: `submitted as Record<string, unknown>` 캐스팅.
 `LoginFormValues`는 이미 `Record<string, unknown>` 할당 가능하므로 불필요.
 
 ## 모바일 반응형 미흡
 
 ### Sidebar 모바일 지원 없음
+
 `layout/sidebar.tsx:60`: `hidden ... md:block` — 모바일에서 사이드바가 완전히 숨겨지고 열 수 있는 방법 없음.
 `(dashboard)/layout.tsx`의 헤더에 모바일 햄버거 메뉴 없음.
 

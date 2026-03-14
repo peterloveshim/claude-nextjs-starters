@@ -1,30 +1,30 @@
-"use client";
+'use client'
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { Menu, Zap } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { siteConfig, navLinks } from "@/lib/constants";
-import { ThemeToggle } from "@/components/common/theme-toggle";
-import { Button } from "@/components/ui/button";
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+import { Menu, Zap } from 'lucide-react'
+import { cn } from '@/lib/utils'
+import { siteConfig, navLinks } from '@/lib/constants'
+import { ThemeToggle } from '@/components/common/theme-toggle'
+import { Button } from '@/components/ui/button'
 import {
   Sheet,
   SheetContent,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from "@/components/ui/sheet";
+} from '@/components/ui/sheet'
 
 // 데스크탑/모바일 헤더 컴포넌트
 export function Header() {
-  const pathname = usePathname();
+  const pathname = usePathname()
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header className="bg-background/95 supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50 w-full border-b backdrop-blur">
       <div className="container mx-auto flex h-14 max-w-screen-xl items-center justify-between px-4">
         {/* 로고 */}
         <Link href="/" className="flex items-center gap-2 font-semibold">
-          <Zap className="size-5 text-primary" />
+          <Zap className="text-primary size-5" />
           <span>{siteConfig.name}</span>
         </Link>
 
@@ -35,10 +35,10 @@ export function Header() {
               key={link.href}
               href={link.href}
               className={cn(
-                "text-sm transition-colors hover:text-foreground",
+                'hover:text-foreground text-sm transition-colors',
                 pathname === link.href
-                  ? "font-medium text-foreground"
-                  : "text-muted-foreground"
+                  ? 'text-foreground font-medium'
+                  : 'text-muted-foreground'
               )}
             >
               {link.label}
@@ -61,7 +61,7 @@ export function Header() {
             <SheetContent side="right" className="w-72">
               <SheetHeader>
                 <SheetTitle className="flex items-center gap-2">
-                  <Zap className="size-5 text-primary" />
+                  <Zap className="text-primary size-5" />
                   {siteConfig.name}
                 </SheetTitle>
               </SheetHeader>
@@ -71,10 +71,10 @@ export function Header() {
                     key={link.href}
                     href={link.href}
                     className={cn(
-                      "rounded-md px-3 py-2 text-sm transition-colors hover:bg-muted",
+                      'hover:bg-muted rounded-md px-3 py-2 text-sm transition-colors',
                       pathname === link.href
-                        ? "bg-muted font-medium text-foreground"
-                        : "text-muted-foreground"
+                        ? 'bg-muted text-foreground font-medium'
+                        : 'text-muted-foreground'
                     )}
                   >
                     {link.label}
@@ -86,5 +86,5 @@ export function Header() {
         </div>
       </div>
     </header>
-  );
+  )
 }
